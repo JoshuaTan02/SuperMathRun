@@ -46,7 +46,7 @@ public class GameController : MonoBehaviour
         Continue();
         SFXCtrl.instance.PlayBGMusic();
         //Smth not working here
-        UpdateProblem();
+        //UpdateProblem();
         
         
     }
@@ -67,7 +67,9 @@ public class GameController : MonoBehaviour
         }
         if(Input.GetKeyDown(KeyCode.A)){
             UpdateProblem();
-            SFXCtrl.instance.ShowAnswerSparkle(Player.GetComponent<Transform>().position);
+                float xOffset = 12;
+                float yOffset =2.0f;
+                SFXCtrl.instance.ShowAnswerSparkle(new Vector2(Player.GetComponent<Transform>().position.x + xOffset,Player.GetComponent<Transform>().position.y + yOffset ));
 
         }
         if(Input.GetKeyDown(KeyCode.B)){
@@ -269,7 +271,7 @@ public class GameController : MonoBehaviour
 
                 correctAnswer = true;
                 float xOffset = 12;
-                float yOffset = 2.5f;
+                float yOffset =2.0f;
                 SFXCtrl.instance.ShowAnswerSparkle(new Vector2(Player.GetComponent<Transform>().position.x + xOffset,Player.GetComponent<Transform>().position.y + yOffset ));
                 SFXCtrl.instance.PlayCorrectAnswer();
                 correctAnswered++;
