@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72337e3c96dedaf4faceb243601fdd7c, type: 3}
+  m_Name: New Character Data Base
+  m_EditorClassIdentifier: 
+  character:
+  - characterName: Jamie
+    characterSprite: {fileID: 21300000, guid: c06e1bc41aa42b742935b53a9103d34f, type: 3}
+  - characterName: Jason
+    characterSprite: {fileID: 21300000, guid: 22a9fe385fed27a488400bf0fe9335b1, type: 3}
+  - characterName: Jambalaya
+    characterSprite: {fileID: 21300000, guid: bab66b92b9cb1e74fb4ea17d1f3ce3a0, type: 3}
+  - characterName: Jorge
+    characterSprite: {fileID: 21300000, guid: 8323a22839193e647b3eb2ecc634e873, type: 3}
