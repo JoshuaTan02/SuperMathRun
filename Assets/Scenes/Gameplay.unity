@@ -2114,7 +2114,15 @@ MonoBehaviour:
   sfx_answer: {fileID: 4796988923649595693, guid: 402b5c5486c184241ae8294d42e1044c, type: 3}
   audioSource: {fileID: 1038922430}
   BGMusic: {fileID: 1038922429}
-  audioClips: []
+  audioClips:
+  - {fileID: 8300000, guid: 6690606ca81fa0d48a396d0afe77cb21, type: 3}
+  - {fileID: 8300000, guid: b88ffff28eeef204582323a3cb7d5d8a, type: 3}
+  - {fileID: 8300000, guid: bf56b322810542341b29549809d6f3f3, type: 3}
+  - {fileID: 0}
+  - {fileID: 8300000, guid: 866d64dcdd46e0f4989c834b85086fd3, type: 3}
+  - {fileID: 8300000, guid: 71f64e929ad8ef84698ca7b1d152c0a3, type: 3}
+  - {fileID: 8300000, guid: 1aee6ccde0daa05438bbd5c91616afc1, type: 3}
+  - {fileID: 0}
 --- !u!4 &1038922428
 Transform:
   m_ObjectHideFlags: 0

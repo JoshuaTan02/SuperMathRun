@@ -77,12 +77,14 @@ public class PlayerCtrl : MonoBehaviour
     void OnCollisionEnter2D(Collision2D other)
     {
        if( other.gameObject.CompareTag("Ground")){
-            Debug.Log("Hit the ground");
+            if(isJumping){
+                //Was jumping and not just running and now landed on ground
+            }
             isGrounded = true;
             isJumping = false;            
             
         }else if (other.gameObject.CompareTag("Obstacle")){
-            Debug.Log("Hit an obstacle");
+            SFXCtrl.instance.PlayObstacleHit();
             isAlive = false;
         
         }else{
@@ -98,6 +100,7 @@ public class PlayerCtrl : MonoBehaviour
     {
         if(other.CompareTag("JumpTrigger") && GameController.instance.isCorrectAnswer()){
             Jump();
+            SFXCtrl.instance.PlayJumpSFX();
             GameController.instance.UpdateProblem();
         }
     }

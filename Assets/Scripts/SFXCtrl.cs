@@ -37,7 +37,7 @@ public class SFXCtrl : MonoBehaviour
 
     }
     void Start(){
-
+        BGMusic.loop = true;
     }
     // Start is called before the first frame update
 
@@ -48,12 +48,38 @@ public class SFXCtrl : MonoBehaviour
     }
 
     public void PlayCorrectAnswer(){
+        playAudio(getClip(0));
+    }
+
+    public void PlayWrongAnswer(){
         playAudio(getClip(1));
-    }
-
-    public void PlayWrongAnswer(Vector2 pos){
 
     }
+
+    public void PlayButtonClick(){
+        playAudio(getClip(2));
+
+    }    
+
+    public void PlayRunning(){
+        playAudio(getClip(3));
+
+    }    
+    public void PlayJumpSFX(){
+        playAudio(getClip(4));
+
+    }
+    public void PlayObstacleHit(){
+        playAudio(getClip(5));
+
+    }
+    public void PlayBGMusic(){
+        BGMusic.loop= true;
+        BGMusic.PlayOneShot(getClip(6));
+
+    }    
+
+
     
     private void playAudio(AudioClip clip){
         audioSource.PlayOneShot(clip);
