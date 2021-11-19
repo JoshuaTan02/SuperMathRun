@@ -16,6 +16,7 @@ public class SFXCtrl : MonoBehaviour
     4: jump sfx
     5: hit obstacle
     6: BG Music
+    7: MainMenu Music
 
 
 
@@ -74,11 +75,17 @@ public class SFXCtrl : MonoBehaviour
 
     }
     public void PlayBGMusic(){
-        BGMusic.loop= true;
         BGMusic.PlayOneShot(getClip(6));
 
     }    
 
+    public void PlayMenuMusic(){
+        BGMusic.PlayOneShot(getClip(7));        
+    }
+
+    public void changeVolumeBG(float volume){
+        BGMusic.volume = volume;
+    }
 
     
     private void playAudio(AudioClip clip){

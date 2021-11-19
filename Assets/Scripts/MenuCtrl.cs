@@ -12,7 +12,7 @@ public class MenuCtrl : MonoBehaviour
 
     public Text factorText;
     private int factor;
-    private int selectedOption = 0;
+    private int selectedOption;
 
     public GameObject HomeMenu;
     public GameObject CustomizeMenu;
@@ -26,8 +26,11 @@ public class MenuCtrl : MonoBehaviour
     private GameObject Multiplication;
     private GameObject Division;
 
+    public GameObject lockedIMG;
+
 
     public void LoadScene(string sceneName){
+        SFXCtrl.instance.PlayButtonClick();
         SceneManager.LoadScene(sceneName);
     }
     public void LoadCustomizedScene(string sceneName){
@@ -45,10 +48,11 @@ public class MenuCtrl : MonoBehaviour
     void Start()
     {
         DataController = GameObject.Find("DATACTRL").GetComponent<DataController>();
+        selectedOption = DataController.getCharacterIndex();
         UpdateCharacter(selectedOption);
         GameObject.Find("txt_highscore").GetComponent<Text>().text = "Highscore: " + DataController.getHighscore();
-        Debug.Log("Highscore is :" +DataController.getHighscore());
         CustomizeMenu.SetActive(false);
+
         
     }
     void Update()
@@ -62,7 +66,7 @@ public class MenuCtrl : MonoBehaviour
         Subtraction =  GameObject.Find("Subtraction");
         Multiplication =  GameObject.Find("Multiplication");
         Division =  GameObject.Find("Division");
-        
+        SFXCtrl.instance.PlayButtonClick();
         UpdateSettings(DataController.getSettings());
         UpdateFactor(DataController.getFactorLevel());
         UpdateCharacterSelect(DataController.getCharacterIndex());
@@ -75,13 +79,18 @@ public class MenuCtrl : MonoBehaviour
             selectedOption = index;
             UpdateCharacter(selectedOption);
 
+        }else{
+
         }
     }
     public void Return(){
+    SFXCtrl.instance.PlayButtonClick();
     HomeMenu.SetActive(true);
     CustomizeMenu.SetActive(false);
+
     }
     public void NextOption(){
+        SFXCtrl.instance.PlayButtonClick();
         selectedOption++;
         if(selectedOption>=characterDB.CharacterCount ){
             selectedOption=0; 
@@ -89,6 +98,7 @@ public class MenuCtrl : MonoBehaviour
         UpdateCharacter(selectedOption);
     }
     public void BackOption(){
+        SFXCtrl.instance.PlayButtonClick();
         selectedOption--;
         if(selectedOption<0 ){
             selectedOption= characterDB.CharacterCount-1; 
@@ -98,6 +108,12 @@ public class MenuCtrl : MonoBehaviour
 
 
     private void UpdateCharacter(int selectedOption){
+        Debug.Log(DataController.isUnlocked(selectedOption));
+        if(!DataController.isUnlocked(selectedOption)){
+            lockedIMG.SetActive(true);
+        }else{
+            lockedIMG.SetActive(false);
+        }
         Character character = characterDB.GetCharacter(selectedOption);
         artworkSpirite.sprite = character.characterSprite;
         nameText.text = character.characterName;
@@ -111,6 +127,8 @@ public class MenuCtrl : MonoBehaviour
     }
     public void increaseFactor(){
         factor +=5;
+        SFXCtrl.instance.PlayButtonClick();
+
         if(factor >20){
             factor = 5;
         }
@@ -118,6 +136,7 @@ public class MenuCtrl : MonoBehaviour
     }
 
     public void decreaseFactor(){
+        SFXCtrl.instance.PlayButtonClick();
         factor -=5;
         if(factor <5){
             factor = 20;

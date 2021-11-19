@@ -6,7 +6,6 @@ public class LevelGenerator : MonoBehaviour
 {
     private int LEVEL_DISTANCE = 30;
     public static int DESTROY_DISTANCE = 20;
-    private float ypos = 2.74f;
     public GameObject Obstacle1;
     public GameObject Obstacle2;
     public GameObject Obstacle3;

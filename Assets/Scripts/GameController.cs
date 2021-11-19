@@ -14,7 +14,6 @@ public class GameController : MonoBehaviour
 
     private int correctAnswered;
 
-    private bool solveProblem = false;
 
     private int[] mathSettings;
     private int factor;
@@ -44,7 +43,6 @@ public class GameController : MonoBehaviour
         BG = GameObject.Find("BG_1").GetComponent<Parallax>();
         HUDMenu.SetActive(false);
         Continue();
-        SFXCtrl.instance.PlayBGMusic();
         //Smth not working here
         //UpdateProblem();
         
@@ -219,6 +217,8 @@ public class GameController : MonoBehaviour
         Time.timeScale = 0;
         GameOverMenu.SetActive(true);
         DimScreen.SetActive(true);
+        SFXCtrl.instance.changeVolumeBG(.2f);
+
     }
 
     public void RewardedAds(){
@@ -232,7 +232,7 @@ public class GameController : MonoBehaviour
     }
     public void GameOverChoice(string sceneName){
         //Player decided to retry or go main menu. so update the score if it changed. 
-        dataController.updateHighscore(score);
+        dataController.updateHighscore(score,correctAnswered);
         dataController.upddateCorrectAnswers(correctAnswered);
         Continue();
         Player.GetComponent<PlayerCtrl>().isAlive = true;
@@ -259,6 +259,7 @@ public class GameController : MonoBehaviour
         HUDMenu.SetActive(false);
         DimScreen.SetActive(false);
         GameOverMenu.SetActive(false);
+        SFXCtrl.instance.changeVolumeBG(.7f);
     }
 
     public void Revive(){

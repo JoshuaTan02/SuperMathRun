@@ -37,12 +37,14 @@ public class DataController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("Getting settings");
+        // PlayerPrefs.DeleteAll();
         correctAnswered = PlayerPrefs.GetInt(CORRECTANSWERED,0);
         highscore = PlayerPrefs.GetInt(HIGHSCORE,0);
         factorlevel = PlayerPrefs.GetInt(FACTORLEVEL,5);
+        PlayerPrefs.SetInt(FACTORLEVEL,factorlevel);
         settings[0] = PlayerPrefs.GetInt("0", 1);
-        characters[0] = PlayerPrefs.GetInt("Character0", 1);
+        characters[0] = 1;
+        PlayerPrefs.SetInt("Character0", 1);
         characterSelectIndex = PlayerPrefs.GetInt(CHARACTERINDEX,0);
         for(int i =1; i < settings.Length; i++){
             settings[i] = PlayerPrefs.GetInt(i+"", 0);
@@ -51,7 +53,6 @@ public class DataController : MonoBehaviour
             characters[i] = PlayerPrefs.GetInt("Character" + i, 0);
         }
 
-        checkAchievements(1000);
     }
 
     // Update is called once per frame
@@ -78,8 +79,16 @@ public class DataController : MonoBehaviour
             settings[0] = PlayerPrefs.GetInt("0", 1);
         }
         this.factorlevel = factorlevel; 
+        if(isUnlocked(characterindex)){
+            //User selected a character that is unlocked
+            Debug.Log("character is unlocked");
+
         this.characterSelectIndex = characterindex;
         PlayerPrefs.SetInt(CHARACTERINDEX,characterindex);
+        }else{
+            Debug.Log("character is not unlocked");
+        }
+
         PlayerPrefs.SetInt(FACTORLEVEL, factorlevel);
         SceneManager.LoadScene(sceneName);
 
@@ -97,13 +106,13 @@ public class DataController : MonoBehaviour
         return PlayerPrefs.GetInt(FACTORLEVEL);
     }
 
-    public void updateHighscore(int newScore){
+    public void updateHighscore(int newScore, int numCorrectAnswers){
         if(newScore > highscore){
             highscore = newScore;
             PlayerPrefs.SetInt(HIGHSCORE,highscore);
             Debug.Log("Player set new high score");
         //If new highscore then should check if got any acheivements
-            checkAchievements(highscore);
+            checkAchievements(highscore, numCorrectAnswers);
 
         }
     }
@@ -113,7 +122,7 @@ public class DataController : MonoBehaviour
         PlayerPrefs.SetInt(CORRECTANSWERED,correctAnswered);
 
     }
-    void checkAchievements(int score){
+    void checkAchievements(int score, int correctAnswers){
         //unlock 2nd character by getting score of 100
         if(PlayerPrefs.GetInt("Character"+1) ==0 && score>99){
             //we know not unlocked yet 
@@ -125,5 +134,10 @@ public class DataController : MonoBehaviour
     public int getHighscore(){
         Debug.Log("Answered correct is: " + PlayerPrefs.GetInt(CORRECTANSWERED));
         return PlayerPrefs.GetInt(HIGHSCORE);
+    }
+
+    public bool isUnlocked(int index){
+        Debug.Log("character at index: " + index + "is: "  + PlayerPrefs.GetInt("Character" + index));
+        return PlayerPrefs.GetInt("Character" + index)!=0;
     }
 }
