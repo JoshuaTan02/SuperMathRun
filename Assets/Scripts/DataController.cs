@@ -25,6 +25,9 @@ public class DataController : MonoBehaviour
     private int[] settings = new int[4];
 
     private int[] characters = new int[4];
+
+    private int numDeaths = 0; 
+    private string NUMDEATHS = "NUMBEROFDEATHS";
     void Awake(){
         int numControllers=FindObjectsOfType<DataController>().Length;
         if(numControllers!=1){
@@ -37,8 +40,10 @@ public class DataController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // PlayerPrefs.DeleteAll();
-        unlockEverything();
+        PlayerPrefs.DeleteAll();
+        // unlockEverything();
+        numDeaths = PlayerPrefs.GetInt(NUMDEATHS,0);
+
         correctAnswered = PlayerPrefs.GetInt(CORRECTANSWERED,0);
         highscore = PlayerPrefs.GetInt(HIGHSCORE,0);
         factorlevel = PlayerPrefs.GetInt(FACTORLEVEL,5);
@@ -140,7 +145,7 @@ public class DataController : MonoBehaviour
             characters[2] = 1;        
         }
     }
-    void unlockDino(){
+    public void unlockNinja(){
         if(PlayerPrefs.GetInt("Character"+3) == 0){
             PlayerPrefs.SetInt("Character"+3,1);
             characters[3] = 1;                   
@@ -152,5 +157,14 @@ public class DataController : MonoBehaviour
 
     public bool isUnlocked(int index){
         return PlayerPrefs.GetInt("Character" + index)!=0;
+    }
+
+    public bool AddDeath(){
+        numDeaths+=1;
+        PlayerPrefs.SetInt(NUMDEATHS,numDeaths);
+        if(numDeaths %3 ==0)
+        return true;
+        else 
+        return false;
     }
 }

@@ -27,6 +27,9 @@ public class MenuCtrl : MonoBehaviour
     private GameObject Division;
 
     public GameObject lockedIMG;
+    public GameObject txt_condition;
+
+    public AdsManager ads;
 
 
     public void LoadScene(string sceneName){
@@ -108,11 +111,27 @@ public class MenuCtrl : MonoBehaviour
 
 
     private void UpdateCharacter(int selectedOption){
-        Debug.Log(DataController.isUnlocked(selectedOption));
         if(!DataController.isUnlocked(selectedOption)){
             lockedIMG.SetActive(true);
+            txt_condition.SetActive(true);
+            Text txtcondition = txt_condition.GetComponent<Text>();
+            if(selectedOption ==1){
+                //the cat
+                string condition = "Highscore of over 99";
+                txtcondition.text= condition;
+            }else if(selectedOption ==2){
+                string condition = "20 Total Questions Answered Correct";
+                txtcondition.text= condition;
+
+            }else if(selectedOption ==3){
+                string condition = "Watch an Ad on Menu Screen";
+                txtcondition.text= condition;
+
+            }
         }else{
             lockedIMG.SetActive(false);
+            txt_condition.SetActive(false);
+
         }
         Character character = characterDB.GetCharacter(selectedOption);
         artworkSpirite.sprite = character.characterSprite;
@@ -167,6 +186,10 @@ public class MenuCtrl : MonoBehaviour
         Division.GetComponent<Toggle>().isOn =false;
 
         
+    }
+
+    public void getDinoAd(){
+        ads.PlayRewardedAd(DataController.unlockNinja);
     }
 
 }

@@ -39,6 +39,8 @@ public class GameController : MonoBehaviour
     public GameObject Cat1;
     public GameObject Dino2;
     public GameObject Ninja3;
+
+    public AdsManager ads;
     void Start()
     {
         dataController = GameObject.Find("DATACTRL").GetComponent<DataController>();
@@ -219,6 +221,7 @@ public class GameController : MonoBehaviour
     }
     public void GameOver(){
         //The player died. Now show the game over screen and give chance for extra live. 
+
         BG.speed =false;
         Time.timeScale = 0;
         GameOverMenu.SetActive(true);
@@ -227,18 +230,27 @@ public class GameController : MonoBehaviour
 
     }
 
+    public void Revive(){
+        ads.PlayRewardedAd(RewardedAds);
+    }
     public void RewardedAds(){
         //Unpause the game and have the playyer reset position but keep everythign else
-        Continue();
+        
         int offset = 15-(score%30); 
         Player.GetComponent<Transform>().position = new Vector3(Player.GetComponent<Transform>().position.x+ offset,Player.GetComponent<Transform>().position.y + 1.5f,Player.GetComponent<Transform>().position.z);
         Player.GetComponent<PlayerCtrl>().isAlive = true;
+        Continue();
+
         UpdateProblem();
 
     }
     public void GameOverChoice(string sceneName){
         //Player decided to retry or go main menu. so update the score if it changed. 
         dataController.updateHighscore(score,correctAnswered);
+        bool playAd = dataController.AddDeath();
+        if(sceneName.Equals("menu")){
+            ads.PlayAd();    
+        }
         Continue();
         Player.GetComponent<PlayerCtrl>().isAlive = true;
         LoadScene(sceneName);
@@ -254,6 +266,7 @@ public class GameController : MonoBehaviour
     }
 
     public void Restart(){
+
         Continue();
         LoadScene("Gameplay");
     }
@@ -267,9 +280,7 @@ public class GameController : MonoBehaviour
         SFXCtrl.instance.changeVolumeBG(.7f);
     }
 
-    public void Revive(){
-        
-    }
+
     public void SelectAnswer(int index){
         if(answeringQuestion){
             if(index == correctIndex){
