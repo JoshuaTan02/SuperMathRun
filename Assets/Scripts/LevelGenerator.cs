@@ -18,12 +18,15 @@ public class LevelGenerator : MonoBehaviour
     void Start()
     {
         CreateObstacle(30,Obstacle1);
-        PlayerPos = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        //PlayerPos = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        while(PlayerPos==null){
+            PlayerPos = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        }
         if(currentObstacleX-PlayerPos.position.x < LEVEL_DISTANCE){
             CreateObstacle(currentObstacleX+LEVEL_DISTANCE,randomObstacle());
         }

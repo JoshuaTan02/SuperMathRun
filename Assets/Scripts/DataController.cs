@@ -38,6 +38,7 @@ public class DataController : MonoBehaviour
     void Start()
     {
         // PlayerPrefs.DeleteAll();
+        unlockEverything();
         correctAnswered = PlayerPrefs.GetInt(CORRECTANSWERED,0);
         highscore = PlayerPrefs.GetInt(HIGHSCORE,0);
         factorlevel = PlayerPrefs.GetInt(FACTORLEVEL,5);
@@ -64,7 +65,6 @@ public class DataController : MonoBehaviour
     public void SaveCustomizedSettings(int[] newSettings, int factorlevel, string sceneName, int characterindex){
 
         bool nosettings = true;
-        Debug.Log("Saving Customized Settings");
 
         for (int i =0; i < newSettings.Length; i++){
             if (newSettings[i] ==1)
@@ -81,12 +81,10 @@ public class DataController : MonoBehaviour
         this.factorlevel = factorlevel; 
         if(isUnlocked(characterindex)){
             //User selected a character that is unlocked
-            Debug.Log("character is unlocked");
 
         this.characterSelectIndex = characterindex;
         PlayerPrefs.SetInt(CHARACTERINDEX,characterindex);
         }else{
-            Debug.Log("character is not unlocked");
         }
 
         PlayerPrefs.SetInt(FACTORLEVEL, factorlevel);
@@ -107,20 +105,28 @@ public class DataController : MonoBehaviour
     }
 
     public void updateHighscore(int newScore, int numCorrectAnswers){
+
         if(newScore > highscore){
             highscore = newScore;
             PlayerPrefs.SetInt(HIGHSCORE,highscore);
-            Debug.Log("Player set new high score");
         //If new highscore then should check if got any acheivements
+            updateCorrectAnswers(numCorrectAnswers);
             checkAchievements(highscore, numCorrectAnswers);
 
         }
     }
 
-    public void upddateCorrectAnswers(int num){
+    public void updateCorrectAnswers(int num){
         correctAnswered+=num;
         PlayerPrefs.SetInt(CORRECTANSWERED,correctAnswered);
 
+    }
+
+    void unlockEverything(){
+        for(int i =1; i < characters.Length; i++){
+            PlayerPrefs.SetInt("Character"+i,1);
+            characters[i] = PlayerPrefs.GetInt("Character" + i, 1);
+        }
     }
     void checkAchievements(int score, int correctAnswers){
         //unlock 2nd character by getting score of 100
@@ -128,16 +134,23 @@ public class DataController : MonoBehaviour
             //we know not unlocked yet 
             PlayerPrefs.SetInt("Character"+1,1);
             characters[1] = 1;
-            Debug.Log("Unlocked character 2");
+        }
+        if(PlayerPrefs.GetInt("Character"+2)==0 && correctAnswered >20 ){
+            PlayerPrefs.SetInt("Character"+2,1);
+            characters[2] = 1;        
+        }
+    }
+    void unlockDino(){
+        if(PlayerPrefs.GetInt("Character"+3) == 0){
+            PlayerPrefs.SetInt("Character"+3,1);
+            characters[3] = 1;                   
         }
     }
     public int getHighscore(){
-        Debug.Log("Answered correct is: " + PlayerPrefs.GetInt(CORRECTANSWERED));
         return PlayerPrefs.GetInt(HIGHSCORE);
     }
 
     public bool isUnlocked(int index){
-        Debug.Log("character at index: " + index + "is: "  + PlayerPrefs.GetInt("Character" + index));
         return PlayerPrefs.GetInt("Character" + index)!=0;
     }
 }

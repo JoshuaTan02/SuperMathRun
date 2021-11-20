@@ -34,10 +34,16 @@ public class GameController : MonoBehaviour
 
     public GameObject GameOverMenu;
     public GameObject DimScreen;
+
+    public GameObject Dog0;
+    public GameObject Cat1;
+    public GameObject Dino2;
+    public GameObject Ninja3;
     void Start()
     {
-        Player= GameObject.FindWithTag("Player");
         dataController = GameObject.Find("DATACTRL").GetComponent<DataController>();
+        RenderCharacter(new Vector3(0,-2.5f,0.56f));
+        Player= GameObject.FindWithTag("Player");
         mathSettings = dataController.getSettings();
         factor  = dataController.getFactorLevel();
         BG = GameObject.Find("BG_1").GetComponent<Parallax>();
@@ -233,7 +239,6 @@ public class GameController : MonoBehaviour
     public void GameOverChoice(string sceneName){
         //Player decided to retry or go main menu. so update the score if it changed. 
         dataController.updateHighscore(score,correctAnswered);
-        dataController.upddateCorrectAnswers(correctAnswered);
         Continue();
         Player.GetComponent<PlayerCtrl>().isAlive = true;
         LoadScene(sceneName);
@@ -303,6 +308,24 @@ public class GameController : MonoBehaviour
         SFXCtrl.instance.PlayButtonClick();
     }
     
-    
+    void RenderCharacter(Vector3 pos){
+        int characterIndex = dataController.getCharacterIndex();
+        switch (characterIndex){
+            case 0:
+            Instantiate(Dog0,pos ,Quaternion.identity);
+            break;
+            case 1:
+            Instantiate(Cat1,pos ,Quaternion.identity);
+            break;
+            case 2:
+            Instantiate(Dino2,pos ,Quaternion.identity);
+            break;
+            case 3:
+            Instantiate(Ninja3,pos ,Quaternion.identity);
+            break;
+        }
+
+
+    }
 
 }
