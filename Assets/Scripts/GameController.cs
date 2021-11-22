@@ -52,7 +52,7 @@ public class GameController : MonoBehaviour
         HUDMenu.SetActive(false);
         Continue();
         //Smth not working here
-        //UpdateProblem();
+        UpdateProblem();
         
         
     }
@@ -153,7 +153,6 @@ public class GameController : MonoBehaviour
                 second = Random.Range(0,factor+1);
             }
             question = first + " ÷ "+ second;
-            Debug.Log("Question is: " + question);
             float diviAnswer = (float)first / (float)second ;
             diviAnswer = Mathf.Round(diviAnswer * 100.0f) * 0.01f;
 

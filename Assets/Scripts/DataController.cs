@@ -40,7 +40,7 @@ public class DataController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        PlayerPrefs.DeleteAll();
+        // PlayerPrefs.DeleteAll();
         // unlockEverything();
         numDeaths = PlayerPrefs.GetInt(NUMDEATHS,0);
 
