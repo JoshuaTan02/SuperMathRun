@@ -50,6 +50,8 @@ public class MenuCtrl : MonoBehaviour
 
     void Start()
     {
+        ads = GameObject.Find("AdsManager").GetComponent<AdsManager>();
+        
         DataController = GameObject.Find("DATACTRL").GetComponent<DataController>();
         selectedOption = DataController.getCharacterIndex();
         UpdateCharacter(selectedOption);

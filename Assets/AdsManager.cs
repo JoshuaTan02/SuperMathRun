@@ -12,6 +12,7 @@ public class AdsManager : MonoBehaviour,IUnityAdsListener
         string gameId = "4461987";
     #endif
     Action onRewardedAdSuccess;
+  
     // Start is called before the first frame update
     void Start()
     {
@@ -20,6 +21,18 @@ public class AdsManager : MonoBehaviour,IUnityAdsListener
         ShowBanner();
     }
 
+    void Awake(){
+        GameObject[] objs = GameObject.FindGameObjectsWithTag("Menu");
+        if (gameObject.name == "AdsManager"){
+        if (objs.Length > 1)
+        {
+            Destroy(this.gameObject);
+        }
+
+        DontDestroyOnLoad(this.gameObject);
+        }
+
+    }
     // Update is called once per frame
     public void PlayAd(){
         #if UNITY_IOS
@@ -84,6 +97,7 @@ public class AdsManager : MonoBehaviour,IUnityAdsListener
     }
     public void OnUnityAdsDidFinish(string placementId, ShowResult showResult){
         if( (placementId == "Rewarded_Android" || placementId=="Rewarded_iOS" ) && showResult== ShowResult.Finished ){
+            Debug.Log(onRewardedAdSuccess);
             onRewardedAdSuccess.Invoke();
         }
 

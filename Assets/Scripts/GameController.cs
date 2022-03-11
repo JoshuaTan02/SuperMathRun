@@ -43,6 +43,7 @@ public class GameController : MonoBehaviour
     public AdsManager ads;
     void Start()
     {
+        ads = GameObject.Find("AdsManager").GetComponent<AdsManager>();
         dataController = GameObject.Find("DATACTRL").GetComponent<DataController>();
         RenderCharacter(new Vector3(0,-2.5f,0.56f));
         Player= GameObject.FindWithTag("Player");
@@ -248,7 +249,7 @@ public class GameController : MonoBehaviour
         dataController.updateHighscore(score,correctAnswered);
         bool playAd = dataController.AddDeath();
         if(sceneName.Equals("menu")){
-            ads.PlayAd();    
+            // ads.PlayAd();    
         }
         Continue();
         Player.GetComponent<PlayerCtrl>().isAlive = true;
