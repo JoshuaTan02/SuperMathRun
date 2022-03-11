@@ -97,7 +97,6 @@ public class AdsManager : MonoBehaviour,IUnityAdsListener
     }
     public void OnUnityAdsDidFinish(string placementId, ShowResult showResult){
         if( (placementId == "Rewarded_Android" || placementId=="Rewarded_iOS" ) && showResult== ShowResult.Finished ){
-            Debug.Log(onRewardedAdSuccess);
             onRewardedAdSuccess.Invoke();
         }
 
